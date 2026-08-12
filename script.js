@@ -24,34 +24,56 @@
   var mobileMenu = document.getElementById('mobile-menu');
 
   if (navToggle && mobileMenu) {
-    var closeMenu = function () {
+    var mobileMenuLinks = Array.prototype.slice.call(mobileMenu.querySelectorAll('a'));
+
+    var closeMenu = function (returnFocus) {
       navToggle.setAttribute('aria-expanded', 'false');
       navToggle.setAttribute('aria-label', 'Open menu');
+      mobileMenu.setAttribute('aria-hidden', 'true');
       mobileMenu.hidden = true;
-      document.body.style.overflow = '';
+      document.body.classList.remove('menu-open');
+
+      if (returnFocus) navToggle.focus();
     };
 
     var openMenu = function () {
       navToggle.setAttribute('aria-expanded', 'true');
       navToggle.setAttribute('aria-label', 'Close menu');
       mobileMenu.hidden = false;
-      document.body.style.overflow = 'hidden';
+      mobileMenu.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('menu-open');
+
+      /* Move keyboard focus into the isolated drawer once it is rendered. */
+      window.requestAnimationFrame(function () {
+        if (mobileMenuLinks.length) mobileMenuLinks[0].focus();
+      });
     };
+
+    /* Keep initial accessibility state in sync with the hidden attribute. */
+    mobileMenu.setAttribute('aria-hidden', 'true');
 
     navToggle.addEventListener('click', function () {
       var isOpen = navToggle.getAttribute('aria-expanded') === 'true';
-      if (isOpen) closeMenu();
+      if (isOpen) closeMenu(false);
       else openMenu();
     });
 
-    mobileMenu.querySelectorAll('a').forEach(function (link) {
-      link.addEventListener('click', closeMenu);
+    mobileMenuLinks.forEach(function (link) {
+      link.addEventListener('click', function () {
+        closeMenu(false);
+      });
     });
 
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && navToggle.getAttribute('aria-expanded') === 'true') {
-        closeMenu();
-        navToggle.focus();
+        closeMenu(true);
+      }
+    });
+
+    /* A drawer left open while rotating/resizing must never leak into desktop. */
+    window.addEventListener('resize', function () {
+      if (window.innerWidth > 768 && navToggle.getAttribute('aria-expanded') === 'true') {
+        closeMenu(false);
       }
     });
   }
