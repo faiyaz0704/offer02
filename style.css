@@ -1506,3 +1506,559 @@ h3 { font-size: clamp(1.25rem, 2.2vw, 1.625rem); }
   .container { padding-inline: 1rem; }
   h1 { font-size: 2rem; }
 }
+
+/* =============================================
+   Final mobile composition
+   Desktop rules above remain unchanged.
+   ============================================= */
+
+@media (max-width: 768px) {
+  :root { --header-height: 64px; }
+
+  /* Keep the decorative hero glow inside the mobile hero's bounds. */
+  .hero { position: relative; }
+
+  html,
+  body {
+    max-width: 100%;
+    overflow-x: clip;
+  }
+
+  body.menu-open {
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
+
+  .container {
+    padding-inline: clamp(1rem, 5.2vw, 1.25rem);
+  }
+
+  .section {
+    padding-block: 3.5rem;
+  }
+
+  .section-marker {
+    font-size: 2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .section-intro,
+  .approach-header,
+  .process-header,
+  .demos-header {
+    margin-bottom: 1.75rem;
+  }
+
+  h1 {
+    font-size: clamp(2.125rem, 9.2vw, 2.4rem);
+    line-height: 1.08;
+  }
+
+  h2 {
+    font-size: clamp(1.75rem, 8vw, 2.125rem);
+  }
+
+  /* Header and isolated mobile navigation layer */
+  .site-header {
+    z-index: 1000;
+    background: rgba(14, 14, 15, 0.96);
+  }
+
+  .header-inner {
+    position: relative;
+    z-index: 2;
+  }
+
+  .nav-toggle {
+    position: relative;
+    z-index: 3;
+    width: 44px;
+    height: 44px;
+    padding: 11px 8px;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .nav-toggle span {
+    width: 100%;
+  }
+
+  .mobile-menu[hidden] {
+    display: none !important;
+  }
+
+  .mobile-menu {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    padding: calc(var(--header-height) + clamp(1rem, 5vh, 2.25rem)) clamp(1rem, 5.2vw, 1.25rem) max(1.25rem, env(safe-area-inset-bottom));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    background: #0e0e0f;
+    border: 0;
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.5);
+    isolation: isolate;
+  }
+
+  .mobile-menu nav {
+    width: 100%;
+    max-width: 30rem;
+    margin-inline: auto;
+  }
+
+  .mobile-menu ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .mobile-menu li {
+    width: 100%;
+  }
+
+  .mobile-menu a {
+    display: flex;
+    align-items: center;
+    min-height: 58px;
+    padding: 0.625rem 0;
+    border-bottom: 1px solid var(--color-border);
+    font-size: clamp(1.375rem, 6.4vw, 1.75rem);
+    line-height: 1.15;
+  }
+
+  .mobile-menu li:last-child a {
+    justify-content: center;
+    min-height: 52px;
+    margin-top: 1rem;
+    padding-inline: 1rem;
+    border: 1px solid rgba(196, 162, 101, 0.45);
+    color: var(--color-accent);
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  .mobile-menu a:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+
+  /* Hero: content first, then a short horizontal visual panel. */
+  .hero {
+    min-height: 100vh;
+    min-height: 100svh;
+    padding-top: var(--header-height);
+  }
+
+  .hero-grid {
+    gap: 1.5rem;
+    padding-block: 2.25rem 2rem;
+  }
+
+  .hero-content {
+    min-width: 0;
+  }
+
+  .hero-support {
+    margin-top: 1rem;
+    font-size: 0.9375rem;
+    line-height: 1.55;
+  }
+
+  .hero-offer {
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+  }
+
+  .hero-price {
+    font-size: 2.5rem;
+  }
+
+  .hero-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.625rem;
+    margin-top: 1.25rem;
+  }
+
+  .hero-actions .btn {
+    width: 100%;
+    min-height: 46px;
+    padding: 0.75rem 0.5rem;
+    font-size: 0.7875rem;
+  }
+
+  .hero-visual {
+    order: 0;
+    min-width: 0;
+  }
+
+  .hero-frame {
+    width: 100%;
+    max-width: none;
+    height: 116px;
+    aspect-ratio: auto;
+    padding: 0.625rem;
+  }
+
+  .hero-frame::before {
+    transform: translate(6px, 6px);
+  }
+
+  .hero-frame-inner {
+    display: grid;
+    grid-template-columns: 0.8fr 1fr 1.25fr;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+  }
+
+  .hero-frame-label {
+    line-height: 1.45;
+  }
+
+  .hero-frame-lines {
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Friction cards: a compact two-column rhythm with a balanced final row. */
+  .problem-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-bottom: 1.75rem;
+  }
+
+  .problem-list li {
+    min-width: 0;
+    min-height: 60px;
+    gap: 0.625rem;
+    padding: 0.75rem;
+    align-items: flex-start;
+  }
+
+  .problem-list li:last-child {
+    grid-column: 1 / -1;
+    justify-content: center;
+  }
+
+  .problem-text {
+    min-width: 0;
+    font-size: 0.875rem;
+  }
+
+  /* Method cards use their full width, avoiding narrow desktop-style columns. */
+  .method-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .method-item {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.375rem;
+    min-width: 0;
+    padding: 0.875rem 0.75rem;
+  }
+
+  .method-body {
+    display: block;
+    min-width: 0;
+  }
+
+  .method-step {
+    font-size: 1.0625rem;
+  }
+
+  .method-body h3 {
+    min-width: 0;
+    margin: 0 0 0.25rem;
+    font-size: 1.125rem;
+    line-height: 1.1;
+  }
+
+  .method-body p {
+    max-width: none;
+    font-size: 0.8125rem;
+    line-height: 1.45;
+  }
+
+  /* Product offer: retain all eight groups in a denser two-column matrix. */
+  .offer-product {
+    margin-bottom: 1.75rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .offer-product-badge {
+    margin-bottom: 1rem;
+  }
+
+  .offer-price {
+    margin-block: 0.75rem;
+    font-size: 2.75rem;
+  }
+
+  .offer-support {
+    font-size: 0.9375rem;
+    line-height: 1.55;
+  }
+
+  .offer-specs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .offer-spec {
+    min-width: 0;
+    padding: 0.875rem 0.75rem;
+  }
+
+  .offer-spec h3 {
+    margin-bottom: 0.4rem;
+  }
+
+  .offer-spec p {
+    font-size: 0.8125rem;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+  }
+
+  .offer-spec-note {
+    font-size: 0.71875rem;
+    line-height: 1.4;
+  }
+
+  .direction {
+    padding-block: 2.75rem;
+  }
+
+  .direction-header p {
+    font-size: 0.9375rem;
+    line-height: 1.55;
+  }
+
+  /* Demo cards become landscape rows instead of stacked desktop panels. */
+  .demos {
+    padding-block: 2.75rem 3.5rem;
+  }
+
+  .demos-header p {
+    font-size: 0.9375rem;
+    line-height: 1.55;
+  }
+
+  .demo-showcase {
+    gap: 0.875rem;
+  }
+
+  .demo-card-shine {
+    display: none;
+  }
+
+  .demo-card,
+  .demo-card-reverse {
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+    min-height: 168px;
+  }
+
+  .demo-card-reverse .demo-card-visual,
+  .demo-card-reverse .demo-card-info {
+    order: 0;
+  }
+
+  .demo-card-visual {
+    min-width: 0;
+    min-height: 168px;
+    aspect-ratio: auto;
+  }
+
+  .demo-browser {
+    width: 90%;
+    height: 84%;
+  }
+
+  .demo-browser-bar {
+    gap: 3px;
+    padding: 5px 6px;
+  }
+
+  .demo-browser-bar span {
+    width: 4px;
+    height: 4px;
+  }
+
+  .demo-preview {
+    height: calc(100% - 19px);
+  }
+
+  .demo-preview-chronelle,
+  .demo-preview-atelier,
+  .demo-preview-horologium {
+    gap: 0.4rem;
+    padding: 0.625rem;
+  }
+
+  .preview-chronelle-hero,
+  .preview-horologium-hero {
+    padding-block: 0.35rem;
+  }
+
+  .preview-headline,
+  .preview-atelier-headline,
+  .preview-horologium-headline {
+    font-size: 0.875rem;
+  }
+
+  .preview-cta {
+    margin-top: 0.4rem;
+    padding: 0.25rem 0.4rem;
+  }
+
+  .demo-card-info {
+    min-width: 0;
+    padding: 1rem 0.75rem;
+  }
+
+  .demo-label {
+    margin-bottom: 0.4rem;
+  }
+
+  .demo-card-info h3 {
+    margin-bottom: 0.125rem;
+    font-size: clamp(1.45rem, 6.8vw, 1.75rem);
+    overflow-wrap: anywhere;
+  }
+
+  .demo-category {
+    margin-bottom: 0.75rem;
+    line-height: 1.35;
+  }
+
+  .demo-explore {
+    font-size: 0.75rem;
+    line-height: 1.35;
+  }
+
+  /* Supporting statements and process both use deliberate two-column flows. */
+  .why {
+    padding-block: 3.25rem;
+  }
+
+  .why-statements {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .why-statements li {
+    font-size: 1.375rem;
+    line-height: 1.15;
+  }
+
+  .scope {
+    padding-block: 3.25rem;
+  }
+
+  .scope-primary {
+    margin-bottom: 1rem;
+  }
+
+  .process-flow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.125rem 0.75rem;
+  }
+
+  .process-flow li {
+    min-width: 0;
+    padding: 0 0 0 0.75rem;
+  }
+
+  .process-name {
+    font-size: 1rem;
+    line-height: 1.25;
+  }
+
+  .process-desc {
+    max-width: none;
+    font-size: 0.75rem;
+    line-height: 1.45;
+  }
+
+  /* Final CTA and contact card keep comfortable touch and reading sizes. */
+  .cta-inner {
+    padding-bottom: 2.5rem;
+  }
+
+  .cta-support {
+    margin-bottom: 1.5rem;
+  }
+
+  .cta-offer {
+    margin-bottom: 1.5rem;
+  }
+
+  .contact-experience {
+    padding: 1.25rem;
+  }
+
+  .contact-experience-intro {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.25rem;
+  }
+
+  .contact-methods {
+    gap: 0.75rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .contact-method {
+    min-height: 70px;
+    padding: 0.875rem;
+  }
+
+  .next-steps {
+    gap: 1rem;
+  }
+
+  .next-steps li {
+    gap: 0.875rem;
+  }
+
+  .site-footer {
+    padding-block: 1.75rem;
+  }
+}
+
+@media (max-width: 350px) {
+  h1 { font-size: 2.0625rem; }
+
+  .hero-grid {
+    gap: 1.25rem;
+    padding-block: 1.75rem;
+  }
+
+  .hero-actions .btn {
+    font-size: 0.75rem;
+  }
+
+  .method-item,
+  .offer-spec {
+    padding-inline: 0.625rem;
+  }
+
+  .demo-card,
+  .demo-card-reverse {
+    grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr);
+  }
+
+  .demo-card-info {
+    padding-inline: 0.625rem;
+  }
+}
